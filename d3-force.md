@@ -44,23 +44,23 @@ var simulation = d3.forceSimulation(nodes);
 
 为一组 [*nodes*](#simulation_nodes)创建一个新的力模拟，但是没有[forces](#simulation_force). 如果 *nodes* 没有被指定, 默认值为一个空数组. 这个模拟器自动 [starts](#simulation_restart); 当模拟启动时可以使用 [*simulation*.on](#simulation_on) 来监听tick事件. 如果你想手动启动模拟, 调用 [*simulation*.stop](#simulation_stop), 然后按照需要调用 [*simulation*.tick](#simulation_tick).
 
-<a name="simulation_restart" href="#simulation_restart">#</a> <i>simulation</i>.<b>restart</b>() [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L86 "Source")
+<a name="simulation_restart" href="#simulation_restart">#</a> <i>simulation</i>.<b>restart</b>() （重启）[<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L86 "Source")
 
-Restarts the simulation’s internal timer and returns the simulation. In conjunction with [*simulation*.alphaTarget](#simulation_alphaTarget) or [*simulation*.alpha](#simulation_alpha), this method can be used to “reheat” the simulation during interaction, such as when dragging a node, or to resume the simulation after temporarily pausing it with [*simulation*.stop](#simulation_stop).
+重启力模拟器内部的计时器并返回这个计时器. 结合 [*simulation*.alphaTarget](#simulation_alphaTarget) 或者 [*simulation*.alpha](#simulation_alpha), 这个方法可以用来在交互期间 “reheat（重加热）” 模拟器, 例如拖拽一个节点, 或者在暂停后 [*simulation*.stop](#simulation_stop)重新启动模拟.
 
-<a name="simulation_stop" href="#simulation_stop">#</a> <i>simulation</i>.<b>stop</b>() [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L90 "Source")
+<a name="simulation_stop" href="#simulation_stop">#</a> <i>simulation</i>.<b>stop</b>() （停止）[<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L90 "Source")
 
-Stops the simulation’s internal timer, if it is running, and returns the simulation. If the timer is already stopped, this method does nothing. This method is useful for running the simulation manually; see [*simulation*.tick](#simulation_tick).
+停止模拟器内部计时器, 如果正在运行，则同时返回这个模拟器. 如果计时器已经被停止了，则什么都不做. 这个方法对手动运行模拟非常有用; 参考 [*simulation*.tick](#simulation_tick).
 
-<a name="simulation_tick" href="#simulation_tick">#</a> <i>simulation</i>.<b>tick</b>([<i>iterations</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L38 "Source")
+<a name="simulation_tick" href="#simulation_tick">#</a> <i>simulation</i>.<b>tick</b>([<i>iterations</i>])（节动） [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L38 "Source")
 
-Manually steps the simulation by the specified number of *iterations*, and returns the simulation. If *iterations* is not specified, it defaults to 1 (single step).
+通过给定的 *迭代*次数手动执行模拟, 并返回模拟器. 如果 *迭代* 没有被指定, 默认为1(单步).
 
-For each iteration, it increments the current [*alpha*](#simulation_alpha) by ([*alphaTarget*](#simulation_alphaTarget) - *alpha*) × [*alphaDecay*](#simulation_alphaDecay); then invokes each registered [force](#simulation_force), passing the new *alpha*; then decrements each [node](#simulation_nodes)’s velocity by *velocity* × [*velocityDecay*](#simulation_velocityDecay); lastly increments each node’s position by *velocity*.
+每次迭代过程, 将当前的 [*alpha*](#simulation_alpha) 增加 ([*alphaTarget*](#simulation_alphaTarget) - *alpha*) × [*alphaDecay*](#simulation_alphaDecay); 然后使用每一个注册的 [force](#simulation_force), 传递新的 *alpha*; 然后通过 *velocity* × [*velocityDecay*](#simulation_velocityDecay)递减每一个 [node](#simulation_nodes)’的速度; 最后通过 *velocity*递增/修改每个节点的位置.
 
-This method does not dispatch [events](#simulation_on); events are only dispatched by the internal timer when the simulation is started automatically upon [creation](#forceSimulation) or by calling [*simulation*.restart](#simulation_restart). The natural number of ticks when the simulation is started is ⌈*log*([*alphaMin*](#simulation_alphaMin)) / *log*(1 - [*alphaDecay*](#simulation_alphaDecay))⌉; by default, this is 300.
+此方法并不会调度事件 [events](#simulation_on); 只有在 [creation](#forceSimulation) 时自动启动模拟或者调用 [*simulation*.restart](#simulation_restart)的时候，内部计时器才会调度事件. 模拟启动时候自然的ticks数为 ⌈*log*([*alphaMin*](#simulation_alphaMin)) / *log*(1 - [*alphaDecay*](#simulation_alphaDecay))⌉; 默认状态下为 300.
 
-This method can be used in conjunction with [*simulation*.stop](#simulation_stop) to compute a [static force layout](https://bl.ocks.org/mbostock/1667139). For large graphs, static layouts should be computed [in a web worker](https://bl.ocks.org/mbostock/01ab2e85e8727d6529d20391c0fd9a16) to avoid freezing the user interface.
+此方法可以结合 [*simulation*.stop](#simulation_stop) 来计算静态力布局 [static force layout](https://bl.ocks.org/mbostock/1667139). 对于大型图, 应当在[in a web worker](https://bl.ocks.org/mbostock/01ab2e85e8727d6529d20391c0fd9a16) 计算static layouts静态布局以避免冻结用户界面.
 
 <a name="simulation_nodes" href="#simulation_nodes">#</a> <i>simulation</i>.<b>nodes</b>([<i>nodes</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L94 "Source")
 
