@@ -62,28 +62,28 @@ var simulation = d3.forceSimulation(nodes);
 
 此方法可以结合 [*simulation*.stop](#simulation_stop) 来计算静态力布局 [static force layout](https://bl.ocks.org/mbostock/1667139). 对于大型图, 应当在[in a web worker](https://bl.ocks.org/mbostock/01ab2e85e8727d6529d20391c0fd9a16) 计算static layouts静态布局以避免冻结用户界面.
 
-<a name="simulation_nodes" href="#simulation_nodes">#</a> <i>simulation</i>.<b>nodes</b>([<i>nodes</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L94 "Source")
+<a name="simulation_nodes" href="#simulation_nodes">#</a> <i>simulation</i>.<b>nodes</b>([<i>nodes</i>])（节点） [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L94 "Source")
 
-If *nodes* is specified, sets the simulation’s nodes to the specified array of objects, initializing their positions and velocities if necessary, and then [re-initializes](#force_initialize) any bound [forces](#simulation_force); returns the simulation. If *nodes* is not specified, returns the simulation’s array of nodes as specified to the [constructor](#forceSimulation).
+如果指定了*节点nodes*, 则将模拟节点设置为指定的对象数组, 必要时初始化它们的初始位置和速度, 然后初始化[re-initializes](#force_initialize) 任何约束力[forces](#simulation_force); 返回模拟器. 如果*节点nodes* 未被指定, 则返回指定构造器 [constructor](#forceSimulation)的模拟节点数组.
 
-Each *node* must be an object. The following properties are assigned by the simulation:
+每个节点*node* 必须是一个对象. 模拟器分配以下属性:
 
-* `index` - the node’s zero-based index into *nodes*
-* `x` - the node’s current *x*-position
-* `y` - the node’s current *y*-position
-* `vx` - the node’s current *x*-velocity
-* `vy` - the node’s current *y*-velocity
+* `index` - 从零开始的*nodes*索引
+* `x` - 节点的当前*x*-位置
+* `y` - 节点的当前*y*-位置
+* `vx` - 节点的当前*x*-速度
+* `vy` - 节点的当前*y*-速度
 
-The position ⟨*x*,*y*⟩ and velocity ⟨*vx*,*vy*⟩ may be subsequently modified by [forces](#forces) and by the simulation. If either *vx* or *vy* is NaN, the velocity is initialized to ⟨0,0⟩. If either *x* or *y* is NaN, the position is initialized in a [phyllotaxis arrangement](http://bl.ocks.org/mbostock/11478058), so chosen to ensure a deterministic, uniform distribution around the origin.
+位置 ⟨*x*,*y*⟩ 和速度 ⟨*vx*,*vy*⟩ 随后可以通过力 [forces](#forces) 和模拟器修改. 如果 *vx* 或者 *vy* 是 NaN, 速度初始化为 ⟨0,0⟩. 如果 *x* 或者 *y* 是 NaN, 则位置以 叶序排序[phyllotaxis arrangement](http://bl.ocks.org/mbostock/11478058)初始化, 因此选择一个确定值, 确保在原点周围的确定的均匀分布.
 
-To fix a node in a given position, you may specify two additional properties:
+要在给定位置固定节点，您可以指定另外两个属性：
 
-* `fx` - the node’s fixed *x*-position
-* `fy` - the node’s fixed *y*-position
+* `fx` - 节点的固定的 *x*-位置
+* `fy` - 节点的固定的 *y*-位置
 
-At the end of each [tick](#simulation_tick), after the application of any forces, a node with a defined *node*.fx has *node*.x reset to this value and *node*.vx set to zero; likewise, a node with a defined *node*.fy has *node*.y reset to this value and *node*.vy set to zero. To unfix a node that was previously fixed, set *node*.fx and *node*.fy to null, or delete these properties.
+在每个节点节动 [tick](#simulation_tick)结束时, 在任何力应用后, 具有已定义 *node*.fx 的节点会将 *node*.x 重置为此值并将 *node*.vx 设置为0; 同样地, 具有已定义 *node*.fy 的节点会将 *node*.y 重置为该值并将*node*.vy 设置为0. 要解除先前固定的节点，请将node.fx和node.fy设置为null，或删除这些属性.
 
-If the specified array of *nodes* is modified, such as when nodes are added to or removed from the simulation, this method must be called again with the new (or changed) array to notify the simulation and bound forces of the change; the simulation does not make a defensive copy of the specified array.
+如果修改了指定的节点数组，例如在模拟中添加或删除节点时，必须使用新的（或更改的）数组再次调用此方法，以通知更改模拟和绑定力;模拟不会生成指定数组的defensive copy(防御副本)。
 
 <a name="simulation_alpha" href="#simulation_alpha">#</a> <i>simulation</i>.<b>alpha</b>([<i>alpha</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L98 "Source")
 
