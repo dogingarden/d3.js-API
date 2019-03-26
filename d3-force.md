@@ -85,15 +85,15 @@ var simulation = d3.forceSimulation(nodes);
 
 如果修改了指定的节点数组，例如在模拟中添加或删除节点时，必须使用新的（或更改的）数组再次调用此方法，以通知更改模拟和绑定力;模拟不会生成指定数组的defensive copy(防御副本)。
 
-<a name="simulation_alpha" href="#simulation_alpha">#</a> <i>simulation</i>.<b>alpha</b>([<i>alpha</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L98 "Source")
+<a name="simulation_alpha" href="#simulation_alpha">#</a> <i>simulation</i>.<b>alpha</b>([<i>alpha</i>])（） [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L98 "Source")
 
-If *alpha* is specified, sets the current alpha to the specified number in the range [0,1] and returns this simulation. If *alpha* is not specified, returns the current alpha value, which defaults to 1.
+如果给定 *alpha* 的值, 将当前的alpha值设置为 [0,1]区间的一个数并返回当前的模拟器. 如果 *alpha* 值未被指定, 则返回当前的alpha值, 默认为 1.
 
 <a name="simulation_alphaMin" href="#simulation_alphaMin">#</a> <i>simulation</i>.<b>alphaMin</b>([<i>min</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L102 "Source")
 
-If *min* is specified, sets the minimum *alpha* to the specified number in the range [0,1] and returns this simulation. If *min* is not specified, returns the current minimum *alpha* value, which defaults to 0.001. The simulation’s internal timer stops when the current [*alpha*](#simulation_alpha) is less than the minimum *alpha*. The default [alpha decay rate](#simulation_alphaDecay) of ~0.0228 corresponds to 300 iterations.
+如果指定了*min* , 则将*alpha* 的最小值设置为[0,1]范围内的指定数字并返回此模拟. 如果*min* 未被指定, 则返回 *alpha* 的最小值, 默认为 0.001.当当前[*alpha*](#simulation_alpha)小于 *alpha*最小值时，模拟的内部计时器停止. 默认的 [alpha decay rate](#simulation_alphaDecay)衰减速率~0.0228 对应300 次迭代.
 
-<a name="simulation_alphaDecay" href="#simulation_alphaDecay">#</a> <i>simulation</i>.<b>alphaDecay</b>([<i>decay</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L106 "Source")
+<a name="simulation_alphaDecay" href="#simulation_alphaDecay">#</a> <i>simulation</i>.<b>alphaDecay</b>([<i>decay</i>])（alpha衰减速率） [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L106 "Source")
 
 If *decay* is specified, sets the [*alpha*](#simulation_alpha) decay rate to the specified number in the range [0,1] and returns this simulation. If *decay* is not specified, returns the current *alpha* decay rate, which defaults to 0.0228… = 1 - *pow*(0.001, 1 / 300) where 0.001 is the default [minimum *alpha*](#simulation_alphaMin).
 
