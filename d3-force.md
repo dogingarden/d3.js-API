@@ -86,7 +86,7 @@ var simulation = d3.forceSimulation(nodes);
 如果修改了指定的节点数组，例如在模拟中添加或删除节点时，必须使用新的（或更改的）数组再次调用此方法，以通知更改模拟和绑定力;模拟不会生成指定数组的defensive copy(防御副本)。
 
 <a name="simulation_alpha" href="#simulation_alpha">#</a> <i>simulation</i>.<b>alpha</b>([<i>alpha</i>])（） [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L98 "Source")
-
+冷却因子，是一种混合参数，用于组合各种力作用于节点。在每一个tick节拍处递减，并减少每一个力对节点位置的影响，在到达alpha的某个阈值后，力布局停止计算，将图形冻结为希望的最佳布局。
 如果给定 *alpha* 的值, 将当前的alpha值设置为 [0,1]区间的一个数并返回当前的模拟器. 如果 *alpha* 值未被指定, 则返回当前的alpha值, 默认为 1.
 
 <a name="simulation_alphaMin" href="#simulation_alphaMin">#</a> <i>simulation</i>.<b>alphaMin</b>([<i>min</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L102 "Source")
@@ -95,11 +95,11 @@ var simulation = d3.forceSimulation(nodes);
 
 <a name="simulation_alphaDecay" href="#simulation_alphaDecay">#</a> <i>simulation</i>.<b>alphaDecay</b>([<i>decay</i>])（alpha衰减速率） [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L106 "Source")
 
-If *decay* is specified, sets the [*alpha*](#simulation_alpha) decay rate to the specified number in the range [0,1] and returns this simulation. If *decay* is not specified, returns the current *alpha* decay rate, which defaults to 0.0228… = 1 - *pow*(0.001, 1 / 300) where 0.001 is the default [minimum *alpha*](#simulation_alphaMin).
+如果指定了衰减*decay* , 则将 [*alpha*](#simulation_alpha) 衰减速率设置为范围[0,1]中的指定数字，并返回模拟. 如果*decay*衰减速率未指定, 返回当前的 *alpha* 衰减速率,默认为 0.0228… = 1 - *pow*(0.001, 1 / 300) ，这里的0.001 是默认的[minimum *alpha*](#simulation_alphaMin).
 
-The alpha decay rate determines how quickly the current alpha interpolates towards the desired [target *alpha*](#simulation_alphaTarget); since the default target *alpha* is zero, by default this controls how quickly the simulation cools. Higher decay rates cause the simulation to stabilize more quickly, but risk getting stuck in a local minimum; lower values cause the simulation to take longer to run, but typically converge on a better layout. To have the simulation run forever at the current *alpha*, set the *decay* rate to zero; alternatively, set a [target *alpha*](#simulation_alphaTarget) greater than the [minimum *alpha*](#simulation_alphaMin).
+alpha衰减速率决定了当前alpha值向目标值[target *alpha*](#simulation_alphaTarget)插值的速率;因为默认的*alpha*目标值为0,因此默认情况下它控制了模拟的冷却速度. 衰减速率越高，模拟到达稳定状态就越快，但有一定风险会停留在局部的最小值;值越低模拟运行时长越长，但通常会收敛到更好的布局上. 让布局永远以当前的 *alpha*值运行, 将 *decay* 衰减速率设置为0; 或者, 将目标 [target *alpha*](#simulation_alphaTarget) 设定大于 [minimum *alpha*](#simulation_alphaMin).
 
-<a name="simulation_alphaTarget" href="#simulation_alphaTarget">#</a> <i>simulation</i>.<b>alphaTarget</b>([<i>target</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L110 "Source")
+<a name="simulation_alphaTarget" href="#simulation_alphaTarget">#</a> <i>simulation</i>.<b>alphaTarget</b>([<i>target</i>])（alpha目标） [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L110 "Source")
 
 If *target* is specified, sets the current target [*alpha*](#simulation_alpha) to the specified number in the range [0,1] and returns this simulation. If *target* is not specified, returns the current target alpha value, which defaults to 0.
 
