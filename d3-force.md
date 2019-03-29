@@ -107,9 +107,9 @@ alpha衰减速率决定了当前alpha值向目标值[target *alpha*](#simulation
 
 如果指定了*decay*, 设定速度衰减因子velocity decay factor 为 [0,1]区间内的指定数字并返回此模拟. 如果 *decay* 未被指定, 返回当前的速度衰减因子velocity decay factor,默认为0.4. 衰减因子decay factor 类似于大气摩擦; 在节拍 [tick](#simulation_tick)期间应用任何力之后, 每一个节点的速度乘以 1 - *decay*.类似 [alpha decay rate](#simulation_alphaDecay), 小的速度衰减速率可能会导致更好的收敛结果, 但是存在数值不稳定和震荡风险.
 
-<a name="simulation_force" href="#simulation_force">#</a> <i>simulation</i>.<b>force</b>(<i>name</i>[, <i>force</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L118 "Source")
+<a name="simulation_force" href="#simulation_force">#</a> <i>simulation</i>.<b>force</b>(<i>name</i>[, <i>force</i>]) （力）[<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L118 "Source")
 
-If *force* is specified, assigns the [force](#forces) for the specified *name* and returns this simulation. If *force* is not specified, returns the force with the specified name, or undefined if there is no such force. (By default, new simulations have no forces.) For example, to create a new simulation to layout a graph, you might say:
+如果指定了力*force*, 则为指定的名称*name*指定力[force](#forces) 并返回此模拟. 如果*force* 未指定, 则返回具有指定名称的力, 如果没有这个力的话就返回undefined. (默认情况下, 新的模拟没有力.) 例如, 对于一个图的布局创建一个新的模拟,你可以这样做:
 
 ```js
 var simulation = d3.forceSimulation(nodes)
@@ -118,19 +118,19 @@ var simulation = d3.forceSimulation(nodes)
     .force("center", d3.forceCenter());
 ```
 
-To remove the force with the given *name*, pass null as the *force*. For example, to remove the charge force:
+通过指定的名称 *name*移除力, 可以通过传递null值给 *force*. 例如, 移除charge（电荷） 力:
 
 ```js
 simulation.force("charge", null);
 ```
 
-<a name="simulation_find" href="#simulation_find">#</a> <i>simulation</i>.<b>find</b>(<i>x</i>, <i>y</i>[, <i>radius</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L122 "Source")
+<a name="simulation_find" href="#simulation_find">#</a> <i>simulation</i>.<b>find</b>(<i>x</i>, <i>y</i>[, <i>radius</i>]) （搜索）[<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L122 "Source")
 
-Returns the node closest to the position ⟨*x*,*y*⟩ with the given search *radius*. If *radius* is not specified, it defaults to infinity. If there is no node within the search area, returns undefined.
+返回与⟨*x*,*y*⟩半径*radius*内最近的节点 . 如果 *radius* 未被指定, 默认为无穷远. 如果搜索区域中没有节点,则返回undefined.
 
-<a name="simulation_on" href="#simulation_on">#</a> <i>simulation</i>.<b>on</b>(<i>typenames</i>, [<i>listener</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L145 "Source")
+<a name="simulation_on" href="#simulation_on">#</a> <i>simulation</i>.<b>on</b>(<i>typenames</i>, [<i>listener</i>])(监听) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L145 "Source")
 
-If *listener* is specified, sets the event *listener* for the specified *typenames* and returns this simulation. If an event listener was already registered for the same type and name, the existing listener is removed before the new listener is added. If *listener* is null, removes the current event listeners for the specified *typenames*, if any. If *listener* is not specified, returns the first currently-assigned listener matching the specified *typenames*, if any. When a specified event is dispatched, each *listener* will be invoked with the `this` context as the simulation.
+如果指定了监听器*listener* , 为指定的类型名称*typenames*设置事件监听器 *listener* 并返回当前模拟. 如果已经为同一名称注册了监听事件，则在添加新的监听之前，删除已有的监听器.如果监听器*listener* 为空（新分配的）,移除给定名称 *typenames*的当前监听器（如果有的话）.如果没有指定监听器*listener* ,则返回第一个与指定名称*typenames*相匹配的监听器（如果有的话）. 当一个指定事件被调用, 每一个 *listener* 都会被调用，其`this`值为当前的模拟，即以当前模拟作为调用函数的上下文.
 
 The *typenames* is a string containing one or more *typename* separated by whitespace. Each *typename* is a *type*, optionally followed by a period (`.`) and a *name*, such as `tick.foo` and `tick.bar`; the name allows multiple listeners to be registered for the same *type*. The *type* must be one of the following:
 
