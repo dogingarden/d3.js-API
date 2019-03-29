@@ -101,11 +101,11 @@ alpha衰减速率决定了当前alpha值向目标值[target *alpha*](#simulation
 
 <a name="simulation_alphaTarget" href="#simulation_alphaTarget">#</a> <i>simulation</i>.<b>alphaTarget</b>([<i>target</i>])（alpha目标） [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L110 "Source")
 
-If *target* is specified, sets the current target [*alpha*](#simulation_alpha) to the specified number in the range [0,1] and returns this simulation. If *target* is not specified, returns the current target alpha value, which defaults to 0.
+如果指定了目标，则将当前目标alpha设置为范围[0,1]中的指定数字，并返回此模拟。如果未指定目标，则返回当前目标alpha值，默认值为0
 
-<a name="simulation_velocityDecay" href="#simulation_velocityDecay">#</a> <i>simulation</i>.<b>velocityDecay</b>([<i>decay</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L114 "Source")
+<a name="simulation_velocityDecay" href="#simulation_velocityDecay">#</a> <i>simulation</i>.<b>velocityDecay</b>([<i>decay</i>]) （衰减速率）[<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L114 "Source")
 
-If *decay* is specified, sets the velocity decay factor to the specified number in the range [0,1] and returns this simulation. If *decay* is not specified, returns the current velocity decay factor, which defaults to 0.4. The decay factor is akin to atmospheric friction; after the application of any forces during a [tick](#simulation_tick), each node’s velocity is multiplied by 1 - *decay*. As with lowering the [alpha decay rate](#simulation_alphaDecay), less velocity decay may converge on a better solution, but risks numerical instabilities and oscillation.
+如果指定了*decay*, 设定速度衰减因子velocity decay factor 为 [0,1]区间内的指定数字并返回此模拟. 如果 *decay* 未被指定, 返回当前的速度衰减因子velocity decay factor,默认为0.4. 衰减因子decay factor 类似于大气摩擦; 在节拍 [tick](#simulation_tick)期间应用任何力之后, 每一个节点的速度乘以 1 - *decay*.类似 [alpha decay rate](#simulation_alphaDecay), 小的速度衰减速率可能会导致更好的收敛结果, 但是存在数值不稳定和震荡风险.
 
 <a name="simulation_force" href="#simulation_force">#</a> <i>simulation</i>.<b>force</b>(<i>name</i>[, <i>force</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L118 "Source")
 
