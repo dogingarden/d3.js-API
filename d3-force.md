@@ -132,18 +132,18 @@ simulation.force("charge", null);
 
 如果指定了监听器*listener* , 为指定的类型名称*typenames*设置事件监听器 *listener* 并返回当前模拟. 如果已经为同一名称注册了监听事件，则在添加新的监听之前，删除已有的监听器.如果监听器*listener* 为空（新分配的）,移除给定名称 *typenames*的当前监听器（如果有的话）.如果没有指定监听器*listener* ,则返回第一个与指定名称*typenames*相匹配的监听器（如果有的话）. 当一个指定事件被调用, 每一个 *listener* 都会被调用，其`this`值为当前的模拟，即以当前模拟作为调用函数的上下文.
 
-The *typenames* is a string containing one or more *typename* separated by whitespace. Each *typename* is a *type*, optionally followed by a period (`.`) and a *name*, such as `tick.foo` and `tick.bar`; the name allows multiple listeners to be registered for the same *type*. The *type* must be one of the following:
+ *typenames*类型名是一个字符串包含一个或多个由空格分隔*typename*类型名. 每一个 *typename* 都是一个*type*, 可选地跟一个句点 (`.`) 以及一个 *name*,例如 `tick.foo` 和`tick.bar`; 这个名字允许多个监听器注册同一个 *type*类型. *type*类型必须是以下之一:
 
-* `tick` - after each tick of the simulation’s internal timer.
-* `end` - after the simulation’s timer stops when *alpha* < [*alphaMin*](#simulation_alphaMin).
+* `tick` - 在模拟内部计时器的每个节拍之后.
+* `end` - 在模拟计时器在 *alpha* < [*alphaMin*](#simulation_alphaMin)停止后.
 
-Note that *tick* events are not dispatched when [*simulation*.tick](#simulation_tick) is called manually; events are only dispatched by the internal timer and are intended for interactive rendering of the simulation. To affect the simulation, register [forces](#simulation_force) instead of modifying nodes’ positions or velocities inside a tick event listener.
+注意手动调用[*simulation*.tick](#simulation_tick) 时不会触发 *tick* 事件; 事件仅仅由内部计时器调度，用于模拟的交互式渲染. 要影响模拟的过程, 注册 [forces](#simulation_force) 而不是修改节拍事件监听器内部的节点位置或速度.
 
-See [*dispatch*.on](https://github.com/d3/d3-dispatch#dispatch_on) for details.
+更多细节请参考 [*dispatch*.on](https://github.com/d3/d3-dispatch#dispatch_on).
 
-### Forces
+### Forces（力）
 
-A *force* is simply a function that modifies nodes’ positions or velocities; in this context, a *force* can apply a classical physical force such as electrical charge or gravity, or it can resolve a geometric constraint, such as keeping nodes within a bounding box or keeping linked nodes a fixed distance apart. For example, a simple positioning force that moves nodes towards the origin ⟨0,0⟩ might be implemented as:
+ *force* 力只是一种修改节点位置或速度的函数; 在这种情况下, 一个 *force*可以施加经典的物理力，例如电荷力或重力,或者它可以解决几何约束问题, 例如将节点保持在边界框内或使得链接的节点保持固定的距离. 例如, 将节点移向远点<0,0>的简单定位力可以实现为:
 
 ```js
 function force(alpha) {
@@ -155,29 +155,29 @@ function force(alpha) {
 }
 ```
 
-Forces typically read the node’s current position ⟨*x*,*y*⟩ and then add to (or subtract from) the node’s velocity ⟨*vx*,*vy*⟩. However, forces may also “peek ahead” to the anticipated next position of the node, ⟨*x* + *vx*,*y* + *vy*⟩; this is necessary for resolving geometric constraints through [iterative relaxation](https://en.wikipedia.org/wiki/Relaxation_\(iterative_method\)). Forces may also modify the position directly, which is sometimes useful to avoid adding energy to the simulation, such as when recentering the simulation in the viewport.
+力通常读取节点当前的位置⟨*x*,*y*⟩ 然后加上(或减去)节点的速度 ⟨*vx*,*vy*⟩. 然而, 力也可以“peek ahead（向前看）”来预测节点的下一个位置, ⟨*x* + *vx*,*y* + *vy*⟩；这对于通过 [iterative relaxation](https://en.wikipedia.org/wiki/Relaxation_\(iterative_method\))迭代松弛来解决几何约束是必要的. 力也可以直接修改位置，这有时可以避免向模拟添加能量，例如在视窗中重新定位模拟时。
 
-Simulations typically compose multiple forces as desired. This module provides several for your enjoyment:
+模拟通常要根据需求组合多个力。这个模块提供几个供您选择:
 
-* [Centering](#centering)
-* [Collision](#collision)
-* [Links](#links)
-* [Many-Body](#many-body)
-* [Positioning](#positioning)
+* [Centering（向心力）](#centering)
+* [Collision（碰撞）](#collision)
+* [Links（链接）](#links)
+* [Many-Body（多体）](#many-body)
+* [Positioning（定位）](#positioning)
 
-Forces may optionally implement [*force*.initialize](#force_initialize) to receive the simulation’s array of nodes.
+Forces可以选择实现 [*force*.initialize](#force_initialize) 来接收模拟的节点数组.
 
 <a name="_force" href="#_force">#</a> <i>force</i>(<i>alpha</i>) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L47 "Source")
 
-Applies this force, optionally observing the specified *alpha*. Typically, the force is applied to the array of nodes previously passed to [*force*.initialize](#force_initialize), however, some forces may apply to a subset of nodes, or behave differently. For example, [d3.forceLink](#links) applies to the source and target of each link.
+应用此力, 可以选择观察指定的 *alpha*. 通常, 将力应用于先前传递给[*force*.initialize](#force_initialize)的节点数组, 然而,一些力也许可以应用于节点子集, 或行为不同. 例如, [d3.forceLink](#links) 适用于每个链接的源和目标.
 
 <a name="force_initialize" href="#force_initialize">#</a> <i>force</i>.<b>initialize</b>(<i>nodes</i>) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L77 "Source")
 
-Assigns the array of *nodes* to this force. This method is called when a force is bound to a simulation via [*simulation*.force](#simulation_force) and when the simulation’s nodes change via [*simulation*.nodes](#simulation_nodes). A force may perform necessary work during initialization, such as evaluating per-node parameters, to avoid repeatedly performing work during each application of the force.
+将节点数组*nodes*分配给此力. 当通过[*simulation*.force](#simulation_force)将力绑定到模拟以及当此模拟节点通过 [*simulation*.nodes](#simulation_nodes)更改时，将调用此方法. 力可以在初始化期间执行必要的工作,例如评估每个节点的参数，以避免在每次施加力时重复执行工作.
 
-#### Centering
+#### Centering（向心力）
 
-The centering force translates nodes uniformly so that the mean position of all nodes (the center of mass if all nodes have equal weight) is at the given position ⟨[*x*](#center_x),[*y*](#center_y)⟩. This force modifies the positions of nodes on each application; it does not modify velocities, as doing so would typically cause the nodes to overshoot and oscillate around the desired center. This force helps keeps nodes in the center of the viewport, and unlike the [positioning force](#positioning), it does not distort their relative positions.
+向心力均匀地移动节点，使得所有节点的平均位置（如果所有节点具有相同的重量，则为质心）位于给定位置⟨[*x*](#center_x),[*y*](#center_y)⟩. 该力修改每个应用节点的位置;它不会改变速度,因为这样做通常会导致节点过冲并围绕预定中心震荡. 此力有助于保持节点保持在视窗的中心。和定位力[positioning force](#positioning)不同,它不会扭曲它们的相对位置.
 
 <a name="forceCenter" href="#forceCenter">#</a> d3.<b>forceCenter</b>([<i>x</i>, <i>y</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/center.js#L1 "Source")
 
