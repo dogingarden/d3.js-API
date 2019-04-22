@@ -181,27 +181,27 @@ Forces可以选择实现 [*force*.initialize](#force_initialize) 来接收模拟
 
 <a name="forceCenter" href="#forceCenter">#</a> d3.<b>forceCenter</b>([<i>x</i>, <i>y</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/center.js#L1 "Source")
 
-Creates a new centering force with the specified [*x*-](#center_x) and [*y*-](#center_y) coordinates. If *x* and *y* are not specified, they default to ⟨0,0⟩.
+使用特定的[*x*-](#center_x) 和[*y*-](#center_y) 坐标创建一个新的向心力. 如果 *x* 和 *y* 没有被指定, 默认为⟨0,0⟩.
 
 <a name="center_x" href="#center_x">#</a> <i>center</i>.<b>x</b>([<i>x</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/center.js#L27 "Source")
 
-If *x* is specified, sets the *x*-coordinate of the centering position to the specified number and returns this force. If *x* is not specified, returns the current *x*-coordinate, which defaults to zero.
+如果 *x* 被指定, 设定中心位置的 *x*-coordinate 为特定的数值并返回这个力. 如果 *x* 没有被指定, 返回当前的 *x*-coordinate, 默认为0.
 
 <a name="center_y" href="#center_y">#</a> <i>center</i>.<b>y</b>([<i>y</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/center.js#L31 "Source")
 
-If *y* is specified, sets the *y*-coordinate of the centering position to the specified number and returns this force. If *y* is not specified, returns the current *y*-coordinate, which defaults to zero.
+如果 *y* 被指定, 设定中心位置的 *y*-coordinate 为特定的数值并返回这个力. 如果 *y* 没有被指定, 返回当前的 *y*-coordinate, 默认为0.
 
-#### Collision
+#### Collision（碰撞）
 
-The collision force treats nodes as circles with a given [radius](#collide_radius), rather than points, and prevents nodes from overlapping. More formally, two nodes *a* and *b* are separated so that the distance between *a* and *b* is at least *radius*(*a*) + *radius*(*b*). To reduce jitter, this is by default a “soft” constraint with a configurable [strength](#collide_strength) and [iteration count](#collide_iterations).
+The collision force（碰撞力） 将节点视为有半径 [radius](#collide_radius)的圆, 而不是点,并阻止节点发生重叠. 更正式地说, 两个节点 *a* 和 *b* 是分离的，所以 *a* 和 *b* 之间的距离至少为 *radius*(*a*) + *radius*(*b*). 为了减少抖动, 默认有一个 “soft” constraint（“软”约束），该约束具有可配置的[strength](#collide_strength) 和 [iteration count](#collide_iterations).
 
 <a name="forceCollide" href="#forceCollide">#</a> d3.<b>forceCollide</b>([<i>radius</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/collide.js "Source")
 
-Creates a new circle collision force with the specified [*radius*](#collide_radius). If *radius* is not specified, it defaults to the constant one for all nodes.
+穿件具有指定半径 [*radius*](#collide_radius)的新的圆碰撞力. 如果 *radius* 未被指定, 默认所有节点都是常量1.
 
 <a name="collide_radius" href="#collide_radius">#</a> <i>collide</i>.<b>radius</b>([<i>radius</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/collide.js#L86 "Source")
 
-If *radius* is specified, sets the radius accessor to the specified number or function, re-evaluates the radius accessor for each node, and returns this force. If *radius* is not specified, returns the current radius accessor, which defaults to:
+如果 *radius* 被指定, 将半径访问器设定为指定的数字或函数, 重新计算每个节点的半径访问器, 并返回此力. 如果 *radius* 没有被指定, 返回当前的半径访问器, 默认为:
 
 ```js
 function radius() {
@@ -209,29 +209,28 @@ function radius() {
 }
 ```
 
-The radius accessor is invoked for each [node](#simulation_nodes) in the simulation, being passed the *node* and its zero-based *index*. The resulting number is then stored internally, such that the radius of each node is only recomputed when the force is initialized or when this method is called with a new *radius*, and not on every application of the force.
+为模拟中的每个节点 [node](#simulation_nodes) 调用半径访问器, 传递节点 *node* 以及其从零开始的索引 *index*. 然后将结果数存储在内部, 这样每个节点的半径仅在初始化力时或者使用新半径调用此方法时重新计算，而不是在每次应用力时调用.
 
 <a name="collide_strength" href="#collide_strength">#</a> <i>collide</i>.<b>strength</b>([<i>strength</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/collide.js#L82 "Source")
 
-If *strength* is specified, sets the force strength to the specified number in the range [0,1] and returns this force. If *strength* is not specified, returns the current strength which defaults to 0.7.
+如果指定*strength* , 将力强度设置为范围[0,1]中的指定数字，并返回此力.如果未指定*strength* , 则返回默认为 0.7的当前强度.
 
-Overlapping nodes are resolved through iterative relaxation. For each node, the other nodes that are anticipated to overlap at the next tick (using the anticipated positions ⟨*x* + *vx*,*y* + *vy*⟩) are determined; the node’s velocity is then modified to push the node out of each overlapping node. The change in velocity is dampened by the force’s strength such that the resolution of simultaneous overlaps can be blended together to find a stable solution.
+节点的重叠可以通过迭代松弛来解决. 对于每一个节点, 确定在下一个节拍被预测会发生重叠的其它节点 (使用预期位置 ⟨*x* + *vx*,*y* + *vy*⟩); 然后修改节点的速度，将节点从重叠区域推出. 速度的变化被力的强度所抑制，这样同时重叠的解决就可以混合在一起找到一个稳定的解.
 
 <a name="collide_iterations" href="#collide_iterations">#</a> <i>collide</i>.<b>iterations</b>([<i>iterations</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/collide.js#L78 "Source")
 
-If *iterations* is specified, sets the number of iterations per application to the specified number and returns this force. If *iterations* is not specified, returns the current iteration count which defaults to 1. Increasing the number of iterations greatly increases the rigidity of the constraint and avoids partial overlap of nodes, but also increases the runtime cost to evaluate the force.
-
+如果指定了迭代*iterations*, 则将每个应用程序的迭代次数设置为指定的次数，并返回此力。 如果未指定 *iterations* , 则返回默认为1的当前迭代计数。增加迭代次数大大增加了约束的刚性，避免了节点的部分重叠，同时也增加了计算力的运行时成本。
 #### Links
 
-The link force pushes linked nodes together or apart according to the desired [link distance](#link_distance). The strength of the force is proportional to the difference between the linked nodes’ distance and the target distance, similar to a spring force.
+链接力根据所需的链接距离将链接节点推到一起或分开 [link distance](#link_distance). 力的强度与链接节点的距离和目标距离之间的差成正比，类似于弹簧力.
 
 <a name="forceLink" href="#forceLink">#</a> d3.<b>forceLink</b>([<i>links</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/link.js "Source")
 
-Creates a new link force with the specified *links* and default parameters. If *links* is not specified, it defaults to the empty array.
+使用指定的链接和默认参数创建新的链接力。如果未指定*links*链接，则默认为空数组。
 
 <a name="link_links" href="#link_links">#</a> <i>link</i>.<b>links</b>([<i>links</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/link.js#L92 "Source")
 
-If *links* is specified, sets the array of links associated with this force, recomputes the [distance](#link_distance) and [strength](#link_strength) parameters for each link, and returns this force. If *links* is not specified, returns the current array of links, which defaults to the empty array.
+如果指定 *links*, sets the array of links associated with this force, recomputes the [distance](#link_distance) and [strength](#link_strength) parameters for each link, and returns this force. If *links* is not specified, returns the current array of links, which defaults to the empty array.
 
 Each link is an object with the following properties:
 
