@@ -230,21 +230,22 @@ function radius() {
 
 <a name="link_links" href="#link_links">#</a> <i>link</i>.<b>links</b>([<i>links</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/link.js#L92 "Source")
 
-如果指定 *links*, sets the array of links associated with this force, recomputes the [distance](#link_distance) and [strength](#link_strength) parameters for each link, and returns this force. If *links* is not specified, returns the current array of links, which defaults to the empty array.
+如果指定 *links*,设置与此力关联的链接数组, 重新计算每个链接的距离 [distance](#link_distance) 与强度 [strength](#link_strength) 参数, 并返回此力. 如果未指定链接*links* , 则返回链接的当前数组, 默认为空数组.
 
-Each link is an object with the following properties:
+每一个链接都是具有以下属性的对象:
 
-* `source` - the link’s source node; see [*simulation*.nodes](#simulation_nodes)
-* `target` - the link’s target node; see [*simulation*.nodes](#simulation_nodes)
-* `index` - the zero-based index into *links*, assigned by this method
+* `source` - 链接的原始节点; 参见 [*simulation*.nodes](#simulation_nodes)
+* `target` - 链接的目标节点; 参见 [*simulation*.nodes](#simulation_nodes)
+* `index` - 从零开始的 *links*的节点, 按此方法分配。
 
-For convenience, a link’s source and target properties may be initialized using numeric or string identifiers rather than object references; see [*link*.id](#link_id). When the link force is [initialized](#force_initialize) (or re-initialized, as when the nodes or links change), any *link*.source or *link*.target property which is *not* an object is replaced by an object reference to the corresponding *node* with the given identifier.
 
-If the specified array of *links* is modified, such as when links are added to or removed from the simulation, this method must be called again with the new (or changed) array to notify the force of the change; the force does not make a defensive copy of the specified array.
+方便起见, 可以使用数字或字符串标识符而不是对象引用来初始化链接的源和目标属性; 参考 [*link*.id](#link_id). 当链接力被初始化 [initialized](#force_initialize) (或重新初始化, 如节点或链接更改时),任何非对象的 *link*.source 或 *link*.target 属性都会被替换为具有给定标识符的响应节点的对象引用。
+
+如果修改了指定的链接*links*数组, 例如在模拟中添加或删除链接时，必须使用新的（或更改的）数组再次调用此方法，以通知更改力；该力不会对指定的数组进行防御性复制。
 
 <a name="link_id" href="#link_id">#</a> <i>link</i>.<b>id</b>([<i>id</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/link.js#L96 "Source")
 
-If *id* is specified, sets the node id accessor to the specified function and returns this force. If *id* is not specified, returns the current node id accessor, which defaults to the numeric *node*.index:
+如果指定了id,则将节点id访问器设置为指定的函数并返回此力。如果没有指定id，返回当前的节点id访问器，默认node.index 数字编号:
 
 ```js
 function id(d) {
@@ -252,7 +253,7 @@ function id(d) {
 }
 ```
 
-The default id accessor allows each link’s source and target to be specified as a zero-based index into the [nodes](#simulation_nodes) array. For example:
+默认的id访问器允许将每一个链接的源和目标指定为节点 [nodes](#simulation_nodes) 数组中从0开始的索引. 例如:
 
 ```js
 var nodes = [
@@ -267,7 +268,7 @@ var links = [
 ];
 ```
 
-Now consider a different id accessor that returns a string:
+现在考虑另一个返回字符串的id访问器:
 
 ```js
 function id(d) {
@@ -275,7 +276,7 @@ function id(d) {
 }
 ```
 
-With this accessor, you can use named sources and targets:
+使用这个访问器，你可以使用源与目标的名称：
 
 ```js
 var nodes = [
@@ -290,13 +291,13 @@ var links = [
 ];
 ```
 
-This is particularly useful when representing graphs in JSON, as JSON does not allow references. See [this example](http://bl.ocks.org/mbostock/f584aa36df54c451c94a9d0798caed35).
+当使用JSON表示图的时候，这特别有用, 因为JSON不允许索引. 参见 [this example](http://bl.ocks.org/mbostock/f584aa36df54c451c94a9d0798caed35).
 
-The id accessor is invoked for each node whenever the force is initialized, as when the [nodes](#simulation_nodes) or [links](#link_links) change, being passed the node and its zero-based index.
+每当力初始化时，都会为每个节点调用id访问器, 例如当节点[nodes](#simulation_nodes)或链接 [links](#link_links) 更改, 会传递给节点及其从0开始的索引.
 
 <a name="link_distance" href="#link_distance">#</a> <i>link</i>.<b>distance</b>([<i>distance</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/link.js#L108 "Source")
 
-If *distance* is specified, sets the distance accessor to the specified number or function, re-evaluates the distance accessor for each link, and returns this force. If *distance* is not specified, returns the current distance accessor, which defaults to:
+如果指定了距离*distance* , 则将距离访问器设置为指定的数字或函数, 重新计算每个链接的距离访问器,并返回此力. 如果距离 *distance* 未被指定, 则返回当前的距离访问器, 默认为:
 
 ```js
 function distance() {
@@ -304,11 +305,11 @@ function distance() {
 }
 ```
 
-The distance accessor is invoked for each [link](#link_links), being passed the *link* and its zero-based *index*. The resulting number is then stored internally, such that the distance of each link is only recomputed when the force is initialized or when this method is called with a new *distance*, and not on every application of the force.
+对每个链接 [link](#link_links)调用距离访问器, 并传递链接 *link* 及其从0开始的索引 *index*. 然后将生成的数字存储在内部, 这样只有在力初始化或者使用新的距离调用此方法时，而不是在每次应用力时，才会重新计算每个链接的距离。
 
 <a name="link_strength" href="#link_strength">#</a> <i>link</i>.<b>strength</b>([<i>strength</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/link.js#L104 "Source")
 
-If *strength* is specified, sets the strength accessor to the specified number or function, re-evaluates the strength accessor for each link, and returns this force. If *strength* is not specified, returns the current strength accessor, which defaults to:
+如果指定了强度*strength*，则将强度访问器设置为指定的数字或函数，重新计算每个链接的强度访问器，并返回此力。如果未指定strength，则返回当前*strength*访问器，默认值为：
 
 ```js
 function strength(link) {
@@ -316,13 +317,13 @@ function strength(link) {
 }
 ```
 
-Where *count*(*node*) is a function that returns the number of links with the given node as a source or target. This default was chosen because it automatically reduces the strength of links connected to heavily-connected nodes, improving stability.
+其中 *count*(*node*) 是一个函数，返回给定节点作为源或目标的链接数. 之所以选择此默认值，是因为它会自动降低连接到heavily-connected（重链接）节点的链接的强度，从而提高稳定性.
 
-The strength accessor is invoked for each [link](#link_links), being passed the *link* and its zero-based *index*. The resulting number is then stored internally, such that the strength of each link is only recomputed when the force is initialized or when this method is called with a new *strength*, and not on every application of the force.
+对每个链接 [link](#link_links)调用强度访问器, 并传递链接 *link*及其从0开始的索引 *index*. 然后将生成的数字存储在内部，这样，只有在初始化力或使用新的强度调用此方法时，而不是在每次应用力时，才会重新计算每个链接的强度*strength*.
 
 <a name="link_iterations" href="#link_iterations">#</a> <i>link</i>.<b>iterations</b>([<i>iterations</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/link.js#L100 "Source")
 
-If *iterations* is specified, sets the number of iterations per application to the specified number and returns this force. If *iterations* is not specified, returns the current iteration count which defaults to 1. Increasing the number of iterations greatly increases the rigidity of the constraint and is useful for [complex structures such as lattices](http://bl.ocks.org/mbostock/1b64ec067fcfc51e7471d944f51f1611), but also increases the runtime cost to evaluate the force.
+如果指定了迭代*iterations* , 则将每个应用的迭代次数设定为指定的次数. 如果 *iterations* 未被指定, 返回默认为1的当前迭代次数.增加迭代次数会大大增加约束的刚度，对于 [复杂结构，如格子](http://bl.ocks.org/mbostock/1b64ec067fcfc51e7471d944f51f1611)会很有用, 当也会增加计算力的运行时间成本.
 
 #### Many-Body
 
