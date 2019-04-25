@@ -327,17 +327,17 @@ function strength(link) {
 
 #### Many-Body
 
-The many-body (or *n*-body) force applies mutually amongst all [nodes](#simulation_nodes). It can be used to simulate gravity (attraction) if the [strength](#manyBody_strength) is positive, or electrostatic charge (repulsion) if the strength is negative. This implementation uses quadtrees and the [Barnes–Hut approximation](https://en.wikipedia.org/wiki/Barnes–Hut_simulation) to greatly improve performance; the accuracy can be customized using the [theta](#manyBody_theta) parameter.
+多体 many-body (或*n*体 *n*-body) 力在所有点[nodes](#simulation_nodes)之间相互作用. 如果[strength](#manyBody_strength) 为正，它可以用来模拟重力(引力) ；如果强度（strength）为负，则可以模拟静电荷力 (排斥) . 该实现使用四叉树和 [Barnes–Hut approximation](https://en.wikipedia.org/wiki/Barnes–Hut_simulation) 来大幅度提升性能; 静笃可以使用 [theta](#manyBody_theta) 参数来进行控制.
 
-Unlike links, which only affect two linked nodes, the charge force is global: every node affects every other node, even if they are on disconnected subgraphs.
+与链接至影响两个被连接的节点不同，电荷力（charge force）是全局的：每个节点都会影响其它节点，即使它们位于断开的子图上.
 
 <a name="forceManyBody" href="#forceManyBody">#</a> d3.<b>forceManyBody</b>() [<>](https://github.com/d3/d3-force/blob/master/src/manyBody.js "Source")
 
-Creates a new many-body force with the default parameters.
+使用默认参数创建新的many-body力.
 
 <a name="manyBody_strength" href="#manyBody_strength">#</a> <i>manyBody</i>.<b>strength</b>([<i>strength</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/manyBody.js#L97 "Source")
 
-If *strength* is specified, sets the strength accessor to the specified number or function, re-evaluates the strength accessor for each node, and returns this force. A positive value causes nodes to attract each other, similar to gravity, while a negative value causes nodes to repel each other, similar to electrostatic charge. If *strength* is not specified, returns the current strength accessor, which defaults to:
+如果指定了强度*strength* , 将*strength*访问器设定为特定的数字或函数, 为每个节点计算强度访问器, 并返回此力. 正值使得节点互相吸引, 类似重力； 负值使节点互相排斥，类似静电荷力. 如果未指定*strength* , 返回当前的strength访问器, 默认为:
 
 ```js
 function strength() {
@@ -345,13 +345,13 @@ function strength() {
 }
 ```
 
-The strength accessor is invoked for each [node](#simulation_nodes) in the simulation, being passed the *node* and its zero-based *index*. The resulting number is then stored internally, such that the strength of each node is only recomputed when the force is initialized or when this method is called with a new *strength*, and not on every application of the force.
+对模拟中的每个节点[node](#simulation_nodes)调用强度访问器, 并传递节点 *node* 及其从0开始的索引 *index*. 然后将生成的数字存储在内部, 这样只有在力初始化或这个方法被调用时，而不是每次应用此力时，才会重新计算每个点解的强度*strength*。
 
 <a name="manyBody_theta" href="#manyBody_theta">#</a> <i>manyBody</i>.<b>theta</b>([<i>theta</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/manyBody.js#L109 "Source")
 
-If *theta* is specified, sets the Barnes–Hut approximation criterion to the specified number and returns this force. If *theta* is not specified, returns the current value, which defaults to 0.9.
+如果指定*theta* , 将Barnes–Hut 估计标准设置为指定的数字并返回该力。 如果未指定 *theta*, 返回当前值,默认为 0.9.
 
-To accelerate computation, this force implements the [Barnes–Hut approximation](http://en.wikipedia.org/wiki/Barnes–Hut_simulation) which takes O(*n* log *n*) per application where *n* is the number of [nodes](#simulation_nodes). For each application, a [quadtree](https://github.com/d3/d3-quadtree) stores the current node positions; then for each node, the combined force of all other nodes on the given node is computed. For a cluster of nodes that is far away, the charge force can be approximated by treating the cluster as a single, larger node. The *theta* parameter determines the accuracy of the approximation: if the ratio *w* / *l* of the width *w* of the quadtree cell to the distance *l* from the node to the cell’s center of mass is less than *theta*, all nodes in the given cell are treated as a single node rather than individually.
+为了加速计算, 这个力实现了 [Barnes–Hut 估计](http://en.wikipedia.org/wiki/Barnes–Hut_simulation) ，这里每次应用取 O(*n* log *n*) ， *n* 是[nodes](#simulation_nodes)的数量. 对每次应用,  [四叉树quadtree](https://github.com/d3/d3-quadtree) 存储当前节点的位置; 然后对于每个节点, 计算所有其它节点对该节点的合力. 对于较远的一组节点, 可以将其视为更大的一个节点来近似计算电荷力。  *theta* 参数决定了近似值的准确性: 如果 四叉树单元的宽度*w*与节点到单元质心中心距离*l*的比值 *w* / *l* 小于*theta*, 所有给定单元中节点被看作一个节点而不是每个都是一个个体。
 
 <a name="manyBody_distanceMin" href="#manyBody_distanceMin">#</a> <i>manyBody</i>.<b>distanceMin</b>([<i>distance</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/manyBody.js#L101 "Source")
 
