@@ -355,15 +355,15 @@ function strength() {
 
 <a name="manyBody_distanceMin" href="#manyBody_distanceMin">#</a> <i>manyBody</i>.<b>distanceMin</b>([<i>distance</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/manyBody.js#L101 "Source")
 
-If *distance* is specified, sets the minimum distance between nodes over which this force is considered. If *distance* is not specified, returns the current minimum distance, which defaults to 1. A minimum distance establishes an upper bound on the strength of the force between two nearby nodes, avoiding instability. In particular, it avoids an infinitely-strong force if two nodes are exactly coincident; in this case, the direction of the force is random.
+如果指定了*distance*，设置节点间最小距离的时候应当考虑力的影响. 如果未指定 *distance* , 返回当前的最小距离, 该值默认为1. 最小距离建立了两个相邻节点之间的力的强度上限，避免了不稳定. 特别是, 如果这两个节点完全重合时，可以避免产生无穷大的力；在这种情况下，力的方向是随机的.
 
 <a name="manyBody_distanceMax" href="#manyBody_distanceMax">#</a> <i>manyBody</i>.<b>distanceMax</b>([<i>distance</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/manyBody.js#L105 "Source")
 
-If *distance* is specified, sets the maximum distance between nodes over which this force is considered. If *distance* is not specified, returns the current maximum distance, which defaults to infinity. Specifying a finite maximum distance improves performance and produces a more localized layout.
+如果指定了 *distance* , 设置节点间最大距离的时候应当考虑力的影响. 如果未指定 *distance* , 返回当前的最大距离, 默认为无穷大. 指定的有限大的值可以提升性能并使得生成结果更加局限在小范围内.
 
 #### Positioning
 
-The [*x*](#forceX)- and [*y*](#forceY)-positioning forces push nodes towards a desired position along the given dimension with a configurable strength. The [*radial*](#forceRadial) force is similar, except it pushes nodes towards the closest point on a given circle. The strength of the force is proportional to the one-dimensional distance between the node’s position and the target position. While these forces can be used to position individual nodes, they are intended primarily for global forces that apply to all (or most) nodes.
+[*x*](#forceX)- 和 [*y*](#forceY)-定位力将节点沿着给定维度推向所需位置，该力具有可配置的强度. [*radial*](#forceRadial) force （径向力）是相似的, 只是它将节点推向给定圆上最近的点. 力的强度与该节点位置与目标位置的一位长度成正比. 虽然这些力可以用于定位单个节点, 但它们主要用于应用于所有（或大多数节点）的全局力.
 
 <a name="forceX" href="#forceX">#</a> d3.<b>forceX</b>([<i>x</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/x.js "Source")
 
