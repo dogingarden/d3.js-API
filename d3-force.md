@@ -2,7 +2,7 @@
 
 该模块实现了一个 [velocity Verlet](https://en.wikipedia.org/wiki/Verlet_integration) 数字积分 for 模拟粒子上的物理力. 该模拟很简单: 它为每一步都假设一个恒定的单位时间步长 Δ*t* = 1 , 和每一个粒子有一个恒定的单位质量 *m* = 1 . 结果, 作用在一个粒子上的力 *F* 等于在恒定时间间隔Δ*t*上的一个恒定加速度 *a* , 可以简单地通过增加粒子的速度来模拟，这个速度会被叠加到粒子的位置上. 
 
-译者注：Verlet算法是经典力学（牛顿力学）中的一种最为普遍的积分方法，被广泛运用在分子运动模拟（Molecular Dynamics Simulation），行星运动以及织物变形模拟等领域。Verlet算法要解决的问题是，给定粒子t时刻的位置r和速度v，得到t+dt时刻的位置r(t+dt)和速度v(t+dt)。最简单的方法是前向计算（考虑当前和未来）的速度位移公式，也就是显式欧拉方法，但精度不够，且不稳定。Verlet积分是一种综合过去、现在和未来的计算方法（居中计算），精度为O(4), 稳定度好，且计算复杂度不比显式欧拉方法高多少。 
+译者注：Verlet算法是经典力学（牛顿力学）中的一种最为普遍的积分方法，被广泛运用在分子运动模拟（Molecular Dynamics Simulation），行星运动以及织物变形模拟等领域。Verlet算法要解决的问题是，给定粒子t时刻的位置r和速度v，得到t+dt时刻的位置r(t+dt)和速度v(t+dt)。最简单的方法是前向计算（考虑当前和未来）的速度位移公式，也就是显式欧拉方法，但精度不够，且不稳定。Verlet积分是一种综合过去、现在和未来的计算方法（居中计算），精度为O(4), 稳定度好，且计算复杂度不比显式欧拉方法高多少。
 
 在信息可视化领域，物理模拟在[网络](http://bl.ocks.org/mbostock/ad70335eeef6d167bc36fd3c04378048)和[层级结果](http://bl.ocks.org/mbostock/95aa92e2f4e8345aaa55a4a94d41ce37)领域非常实用!
 
@@ -443,18 +443,18 @@ function strength() {
 }
 ```
 
-The strength accessor is invoked for each [node](#simulation_nodes) in the simulation, being passed the *node* and its zero-based *index*. The resulting number is then stored internally, such that the strength of each node is only recomputed when the force is initialized or when this method is called with a new *strength*, and not on every application of the force.
+为模拟中每个节点调用强度访问器 [node](#simulation_nodes) , 传递节点 *node* 和其从0开始的索引 *index*. 然后在内部存储得到的数字，使得每个节点的强度仅在初始化力时或者以新的力量调用该方法时重新计算，而不是在力的每个应用上调用。
 
 <a name="radial_radius" href="#radial_radius">#</a> <i>radial</i>.<b>radius</b>([<i>radius</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/radial.js "Source")
 
-If *radius* is specified, sets the circle *radius* to the specified number or function, re-evaluates the *radius* accessor for each node, and returns this force. If *radius* is not specified, returns the current *radius* accessor.
+如果指定了半径 *radius* , 将圆的半径 *radius* 设置为指定的数字或函数, 重新计算每个节点的半径*radius* 访问器，并返回此力. 如果未指定 *radius* , 返回当前的 *radius* 访问器.
 
-The *radius* accessor is invoked for each [node](#simulation_nodes) in the simulation, being passed the *node* and its zero-based *index*. The resulting number is then stored internally, such that the target radius of each node is only recomputed when the force is initialized or when this method is called with a new *radius*, and not on every application of the force.
+在模拟中的每个节点[node](#simulation_nodes)调用 *radius* 访问器, 传递节点 *node* 及其从0开始的索引 *index*. 然后在内部存储得到的数字, 然后在内部存储得到的数字，使得每个节点的目标半径仅在初始化力时或者在使用新半径 *radius* 调用此方法时重新计算，而不是在力的每个应用上调用。
 
 <a name="radial_x" href="#radial_x">#</a> <i>radial</i>.<b>x</b>([<i>x</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/radial.js "Source")
 
-If *x* is specified, sets the *x*-coordinate of the circle center to the specified number and returns this force. If *x* is not specified, returns the current *x*-coordinate of the center, which defaults to zero.
+如果指定了x，则将圆心的x坐标设置为指定的数字并返回此力。 如果未指定x，则返回中心的当前x坐标，默认为零。
 
 <a name="radial_y" href="#radial_y">#</a> <i>radial</i>.<b>y</b>([<i>y</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/radial.js "Source")
 
-If *y* is specified, sets the *y*-coordinate of the circle center to the specified number and returns this force. If *y* is not specified, returns the current *y*-coordinate of the center, which defaults to zero.
+如果指定了y，则将圆心的y坐标设置为指定的数字并返回此力。 如果未指定y，则返回中心的当前y坐标，默认为零。
