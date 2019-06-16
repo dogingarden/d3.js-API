@@ -16,7 +16,7 @@
 
 [<img alt="Force-Directed Lattice" src="https://raw.githubusercontent.com/d3/d3-force/master/img/lattice.png" width="480" height="250">](http://bl.ocks.org/mbostock/1b64ec067fcfc51e7471d944f51f1611)
 
-使用本模块, 为一个 [nodes](#simulation_nodes)数组建立一个 [simulation](#simulation) , 组成所欲要的 [forces](#simulation_force). 然后 [监听](#simulation_on) tick 事件，以便在你需要的图形系统（Canvas or SVG）中更新节点并对其进行渲染.
+使用本模块, 为一个 [nodes](#simulation_nodes)数组建立一个 [simulation](#simulation) , 组成需要的 [forces](#simulation_force). 然后 [监听](#simulation_on) tick 事件，以便在你需要的图形系统（Canvas or SVG）中更新节点并对其进行渲染.
 
 ## 安装
 
