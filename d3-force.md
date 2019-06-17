@@ -86,7 +86,8 @@ var simulation = d3.forceSimulation(nodes);
 如果修改了指定的节点数组，例如在模拟中添加或删除节点时，必须使用新的（或更改的）数组再次调用此方法，以通知更改模拟和绑定力;模拟不会生成指定数组的defensive copy(防御副本)。
 
 <a name="simulation_alpha" href="#simulation_alpha">#</a> <i>simulation</i>.<b>alpha</b>([<i>alpha</i>])（） [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L98 "Source")
-冷却因子，是一种混合参数，用于组合各种力作用于节点。在每一个tick节拍处递减，并减少每一个力对节点位置的影响，在到达alpha的某个阈值后，力布局停止计算，将图形冻结为希望的最佳布局。
+
+alpha为冷却因子，是一种混合参数，用于组合各种力作用于节点。在每一个tick节拍处递减，并减少每一个力对节点位置的影响，在到达alpha的某个阈值后，力布局停止计算，将图形冻结为希望的最佳布局。
 如果给定 *alpha* 的值, 将当前的alpha值设置为 [0,1]区间的一个数并返回当前的模拟器. 如果 *alpha* 值未被指定, 则返回当前的alpha值, 默认为 1.
 
 <a name="simulation_alphaMin" href="#simulation_alphaMin">#</a> <i>simulation</i>.<b>alphaMin</b>([<i>min</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L102 "Source")
@@ -155,7 +156,7 @@ function force(alpha) {
 }
 ```
 
-力通常读取节点当前的位置⟨*x*,*y*⟩ 然后加上(或减去)节点的速度 ⟨*vx*,*vy*⟩. 然而, 力也可以“peek ahead（向前看）”来预测节点的下一个位置, ⟨*x* + *vx*,*y* + *vy*⟩；这对于通过 [iterative relaxation](https://en.wikipedia.org/wiki/Relaxation_\(iterative_method\))迭代松弛来解决几何约束是必要的. 力也可以直接修改位置，这有时可以避免向模拟添加能量，例如在视窗中重新定位模拟时。
+力通常读取节点当前的位置⟨*x*,*y*⟩ 然后加上(或减去)节点的速度 ⟨*vx*,*vy*⟩. 然而, 力也可预测节点的下一个位置⟨*x* + *vx*,*y* + *vy*⟩；这对于通过 [iterative relaxation（迭代松弛）](https://en.wikipedia.org/wiki/Relaxation_\(iterative_method\))来解决几何约束是必要的. 力也可以直接修改位置，这有时可以避免向模拟添加能量，例如在视窗中重新定位模拟时。
 
 模拟通常要根据需求组合多个力。这个模块提供几个供您选择:
 
@@ -327,9 +328,9 @@ function strength(link) {
 
 #### Many-Body
 
-多体 many-body (或*n*体 *n*-body) 力在所有点[nodes](#simulation_nodes)之间相互作用. 如果[strength](#manyBody_strength) 为正，它可以用来模拟重力(引力) ；如果强度（strength）为负，则可以模拟静电荷力 (排斥) . 该实现使用四叉树和 [Barnes–Hut approximation](https://en.wikipedia.org/wiki/Barnes–Hut_simulation) 来大幅度提升性能; 静笃可以使用 [theta](#manyBody_theta) 参数来进行控制.
+多体 many-body (或*n*体 *n*-body) 力在所有点[nodes](#simulation_nodes)之间相互作用. 如果[strength](#manyBody_strength) 为正，它可以用来模拟重力(引力) ；如果强度（strength）为负，则可以模拟静电荷力 (排斥) . 该实现使用四叉树和 [Barnes–Hut approximation](https://en.wikipedia.org/wiki/Barnes–Hut_simulation) 来大幅度提升性能; 精确度可以使用 [theta](#manyBody_theta) 参数来进行控制.
 
-与链接至影响两个被连接的节点不同，电荷力（charge force）是全局的：每个节点都会影响其它节点，即使它们位于断开的子图上.
+与链接只影响两个被连接的节点不同，电荷力（charge force）是全局的：每个节点都会影响其它节点，即使它们位于断开的子图上.
 
 <a name="forceManyBody" href="#forceManyBody">#</a> d3.<b>forceManyBody</b>() [<>](https://github.com/d3/d3-force/blob/master/src/manyBody.js "Source")
 
@@ -381,7 +382,7 @@ function strength() {
 }
 ```
 
-对模拟中的每个节点 [node](#simulation_nodes) 调用强度访问器, 并传递该节点 *node* 及其从0开始的索引 *index*. 然后将生成的数据存储在内部, 这样，只有在力初始化或使用心得强度 *strength*参数调用此方法时，而不是每次应用力时，才会重新计算每个节点的强度.
+对模拟中的每个节点 [node](#simulation_nodes) 调用强度访问器, 并传递该节点 *node* 及其从0开始的索引 *index*. 然后将生成的数据存储在内部, 这样，只有在力初始化或使用新的强度 *strength*参数调用此方法时，而不是每次应用力时，才会重新计算每个节点的强度.
 
 <a name="x_x" href="#x_x">#</a> <i>x</i>.<b>x</b>([<i>x</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/x.js#L36 "Source")
 
